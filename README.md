@@ -8,6 +8,7 @@ MySQL replication status checker daemon in docker image with Slack notification.
 | ------------- | ------------- |
 | MYSQL_HOST | MySQL host address (required) |
 | MYSQL_PORT | MySQL host port |
+| MYSQL_USERNAME | MySQL username (required) |
 | MYSQL_PASSWORD | MySQL password (required) |
 | MYSQL_DATABASE | MySQL database name (required) |
 | SLACK_URL | Slack webhook message url (required) |

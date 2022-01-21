@@ -29,5 +29,5 @@ docker run -e MYSQL_HOST=127.0.0.1 -e MYSQL_USER=root -e MYSQL_PASSWORD=secret -
 
 Sends a Slack message if:
 - First check
-- If state changed (success -> error, error -> success)
-- If renotify enabled with `SUCCESS_MIN_ELAPSED_TIME` or `ERROR_MIN_ELAPSED_TIME` envs.
+- State changed (success -> error, error -> success)
+- Renotify enabled with `SUCCESS_MIN_ELAPSED_TIME` or `ERROR_MIN_ELAPSED_TIME` envs.

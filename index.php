@@ -80,5 +80,5 @@ while (1) {
         echo "MySQL replication working.\n";
     }
 
-    sleep(1);
+    sleep(60); // 1 min
 }

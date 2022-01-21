@@ -34,21 +34,20 @@ if ($mysqlHost === false || $mysqlUser === false || $mysqlDatabase === false || 
     throw new Exception('MySQL config missing.');
 }
 
-$pdo = new PDO(
-    'mysql:host=' . $mysqlHost . ';port=' . ($mysqlPort ?: '3306') . ';' . 'dbname=' . $mysqlDatabase . ';',
-    $mysqlUser,
-    $mysqlPassword,
-    [
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]
-);
-
-$checker = new Checker($pdo);
-
 State::$successMinElapsedTime = $successMinElapsedTime;
 State::$errorMinElapsedTime = $errorMinElapsedTime;
 
 while (1) {
+    $pdo = new PDO(
+        'mysql:host=' . $mysqlHost . ';port=' . ($mysqlPort ?: '3306') . ';' . 'dbname=' . $mysqlDatabase . ';',
+        $mysqlUser,
+        $mysqlPassword,
+        [
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+
+    $checker = new Checker($pdo);
     $checker->run();
     $errors = $checker->getErrors();
 
@@ -80,8 +79,6 @@ while (1) {
 
         echo "MySQL replication working.\n";
     }
-
-    unset($slackMessage);
 
     sleep(1);
 }

@@ -29,6 +29,8 @@ $mysqlPassword = getenv('MYSQL_PASSWORD');
 $slackUrl = getenv('SLACK_URL');
 $successMinElapsedTime = (int) getenv('SUCCESS_MIN_ELAPSED_TIME');
 $errorMinElapsedTime = (int) getenv('ERROR_MIN_ELAPSED_TIME');
+$appName = getenv('APP_NAME');
+$checkingSleep = (int) getenv('CHECKING_SLEEP');
 
 if ($mysqlHost === false || $mysqlUser === false || $mysqlDatabase === false || $mysqlPassword === false) {
     throw new Exception('MySQL config missing.');
@@ -37,7 +39,17 @@ if ($mysqlHost === false || $mysqlUser === false || $mysqlDatabase === false || 
 State::$successMinElapsedTime = $successMinElapsedTime;
 State::$errorMinElapsedTime = $errorMinElapsedTime;
 
-while (1) {
+// Default app name.
+if ($appName === false) {
+    $appName = 'MySQL';
+}
+
+// Default checking sleep.
+if ($checkingSleep === 0) {
+    $checkingSleep = 60;
+}
+
+while (true) {
     $pdo = new PDO(
         'mysql:host=' . $mysqlHost . ';port=' . ($mysqlPort ?: '3306') . ';' . 'dbname=' . $mysqlDatabase . ';',
         $mysqlUser,
@@ -55,7 +67,7 @@ while (1) {
 
     if (count($errors) > 0) {
         if (State::needNotify(State::STATE_ERROR)) {
-            $slackMessage->setTitle('MySQL replication error');
+            $slackMessage->setTitle($appName . ' replication error');
             $slackMessage->setText(implode("\n", $errors));
             $slackMessage->setColor(SlackMessage::COLOR_RED);
             $slackMessage->send();
@@ -68,7 +80,7 @@ while (1) {
         echo implode('; ', $errors) . "\n";
     } else {
         if (State::needNotify(State::STATE_SUCCESS)) {
-            $slackMessage->setTitle('MySQL replication working');
+            $slackMessage->setTitle($appName . ' replication working');
             $slackMessage->setColor(SlackMessage::COLOR_GREEN);
             $slackMessage->send();
 
@@ -77,8 +89,8 @@ while (1) {
 
         State::save(State::STATE_SUCCESS);
 
-        echo "MySQL replication working.\n";
+        echo $appName . " replication working.\n";
     }
 
-    sleep(60); // 1 min
+    sleep($checkingSleep); // 1 min
 }

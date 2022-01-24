@@ -15,7 +15,7 @@ MySQL replication status checker daemon in docker image with Slack notification.
 | SUCCESS_MIN_ELAPSED_TIME  | Min elapsed time before renotify success message (`0` means disabled) |
 | ERROR_MIN_ELAPSED_TIME  | Min elapsed time before renotify error message (`0` means disabled) |
 | APP_NAME  | App name for slack message (default `MySQL`) |
-| CHECKING_SLEEP  | Second between two check (default `60`) |
+| CHECKING_SLEEP  | Time (sec) between two check (default `60`) |
 
 ## Usage
 

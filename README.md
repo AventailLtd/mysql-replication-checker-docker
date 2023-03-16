@@ -10,7 +10,7 @@ MySQL replication status checker daemon in docker image with Slack notification.
 | MYSQL_PORT | MySQL host port |
 | MYSQL_USER | MySQL user (required) |
 | MYSQL_PASSWORD | MySQL password (required) |
-| MYSQL_DATABASE | MySQL database name (required) |
+| MYSQL_DATABASE | MySQL database name (optional - future use) |
 | SLACK_URL | Slack webhook message url (required) |
 | SUCCESS_MIN_ELAPSED_TIME  | Min elapsed time before renotify success message (`0` means disabled) |
 | ERROR_MIN_ELAPSED_TIME  | Min elapsed time before renotify error message (`0` means disabled) |

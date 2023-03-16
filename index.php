@@ -32,7 +32,7 @@ $errorMinElapsedTime = (int) getenv('ERROR_MIN_ELAPSED_TIME');
 $appName = getenv('APP_NAME');
 $checkingSleep = (int) getenv('CHECKING_SLEEP');
 
-if ($mysqlHost === false || $mysqlUser === false || $mysqlDatabase === false || $mysqlPassword === false) {
+if ($mysqlHost === false || $mysqlUser === false || $mysqlPassword === false) {
     throw new Exception('MySQL config missing.');
 }
 
@@ -50,8 +50,12 @@ if ($checkingSleep === 0) {
 }
 
 while (true) {
+    $dsn = 'mysql:host=' . $mysqlHost . ';port=' . ($mysqlPort ?: '3306');
+    if ($mysqlDatabase !== false) {
+        $dsn .= ';dbname=' . $mysqlDatabase;
+    }
     $pdo = new PDO(
-        'mysql:host=' . $mysqlHost . ';port=' . ($mysqlPort ?: '3306') . ';' . 'dbname=' . $mysqlDatabase . ';',
+        $dsn,
         $mysqlUser,
         $mysqlPassword,
         [

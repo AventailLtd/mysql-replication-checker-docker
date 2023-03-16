@@ -1,4 +1,4 @@
-FROM composer:2.2.4 as composer_stage
+FROM composer:2.5.4 as composer_stage
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN composer install --ignore-platform-reqs --prefer-dist --no-scripts --no-prog
 
 RUN composer dump-autoload --optimize --apcu --no-dev
 
-FROM php:8.1.1-fpm-buster
+FROM php:8.2.3-fpm-bullseye
 
 WORKDIR /app
 
